@@ -1,0 +1,9 @@
+[
+  {"Entry": "www.google.com", "Data": "142.250.80.36", "Type": 1, "TimeToLive": 212},
+  {"Entry": "www.google.com", "Data": "2607:f8b0:4006:81f::2004", "Type": 28, "TimeToLive": 212},
+  {"Entry": "github.com", "Data": "140.82.112.4", "Type": 1, "TimeToLive": 45},
+  {"Entry": "github.com", "Data": "140.82.112.4", "Type": 1, "TimeToLive": 30},
+  {"Entry": "Discord.com.", "Data": "162.159.137.232", "Type": 1, "TimeToLive": 180},
+  {"Entry": "localhost", "Data": "127.0.0.1", "Type": 1, "TimeToLive": 86400},
+  {"Entry": "www.microsoft.com", "Data": "www.microsoft.com-c-3.edgekey.net", "Type": 5, "TimeToLive": 2400}
+]
