@@ -5,21 +5,21 @@ Usage (on Windows):
     python main.py
 
 Test a saved cache file (works on any OS):
-
     python main.py --sample sample_cache.json
-
 
 """
 
 import argparse
 import sys
-
+from storage import connect, count_records, save_records
 from collector import collect
 
 
 def main():
     parser = argparse.ArgumentParser(description="DNS cache monitor - collection step")
-    parser.add_argument("--sample", help="read a saved cache JSON file")
+    parser.add_argument( "--sample",
+        metavar="FILE",
+        help="read DNS cache entries from a saved JSON file instead of the live Windows cache",)
     args = parser.parse_args()
 
     try:
@@ -39,6 +39,13 @@ def main():
           f"({len({r.ip for r in records})} unique IPs, "
           f"{len({r.domain for r in records})} unique domains)")
 
+    conn = connect()
+    try:
+        new = save_records(conn, records)
+        print(f"Saved to database: {new} new, {count_records(conn)} total")
+    finally:
+        conn.close()
 
+        
 if __name__ == "__main__":
     main()
