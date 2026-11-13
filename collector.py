@@ -8,6 +8,7 @@ import json         # parse JSON from PowerShell
 import platform 
 import subprocess
 from dataclasses import dataclass
+import ctypes
 
 # DNS record type numbers
 RECORD_TYPES = {1: "A", 28: "AAAA"}
@@ -27,6 +28,13 @@ class DnsRecord:
     record_type: str  # IPv4 ("A") or IPv6 ("AAAA")
     ttl: int          # time to live
 
+def is_admin():
+    """Check if the current process is running with administrator privileges (Windows only)."""
+    try:
+        return bool(ctypes.windll.shell32.IsUserAnAdmin())
+    except AttributeError:
+        return False  # not on Windows
+
 
 def read_raw_cache(timeout=30):
     """Run PowerShell and return the DNS cache"""
@@ -34,6 +42,11 @@ def read_raw_cache(timeout=30):
         raise RuntimeError(
             "Reading the DNS cache only works on Windows. "
             "Use --sample to test with a saved cache file."
+        )
+    if not is_admin():
+        raise RuntimeError(
+            "Reading the DNS cache requires administrator rights. "
+            "Run the terminal as administrator, or use --input to read a saved cache file."
         )
 
     result = subprocess.run(

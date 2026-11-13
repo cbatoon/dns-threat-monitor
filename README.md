@@ -33,6 +33,7 @@ sent to a third party.
 
 ## Known limitations
 
+- Reading the DNS cache requires running as administrator. Without it, Windows returns an empty cache instead of an error.
 - Cache entries expire based on their TTL, so a short-lived lookup can disappear
   between polls.
 - Browsers using DNS over HTTPS ("Secure DNS") may resolve names without going
